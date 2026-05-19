@@ -7,15 +7,8 @@ use App\Services\VisitService;
 
 class VisitController extends Controller
 {
-    protected $visitService;
-
-    public function __construct(VisitService $visitService)
+    public function stats(VisitService $visitService)
     {
-        $this->visitService = $visitService;
-    }
-
-    public function stats()
-    {
-        return response()->json($this->visitService->getStats());
+        return response()->json($visitService->getStats());
     }
 }

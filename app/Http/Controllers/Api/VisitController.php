@@ -8,16 +8,9 @@ use App\Services\VisitService;
 
 class VisitController extends Controller
 {
-    protected $visitService;
-
-    public function __construct(VisitService $visitService)
+    public function track(Request $request, VisitService $visitService)
     {
-        $this->visitService = $visitService;
-    }
-
-    public function track(Request $request)
-    {
-        $this->visitService->trackVisit($request->ip(), $request->header('User-Agent'));
+        $visitService->trackVisit($request->ip(), $request->header('User-Agent'));
 
         return response()->json(['status' => 'success']);
     }
