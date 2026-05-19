@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\VisitService;
 
@@ -19,10 +20,5 @@ class VisitController extends Controller
         $this->visitService->trackVisit($request->ip(), $request->header('User-Agent'));
 
         return response()->json(['status' => 'success']);
-    }
-
-    public function stats()
-    {
-        return response()->json($this->visitService->getStats());
     }
 }

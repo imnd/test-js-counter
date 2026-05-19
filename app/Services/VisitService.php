@@ -11,23 +11,19 @@ class VisitService
 {
     public function trackVisit(?string $ip, ?string $userAgent): void
     {
-        if (!$ip) {
-            $ip = '127.0.0.1';
-        }
-        
-        // Handle local testing
-        if ($ip === '127.0.0.1' || $ip === '::1') {
+        // Handle local testing and empty IP
+        if (!$ip || $ip === '127.0.0.1' || $ip === '::1') {
             $ip = '8.8.8.8'; // Mock IP for testing
         }
 
         // Fetch City using IP API
         $city = 'Unknown';
         try {
-            $response = Http::timeout(3)->get("http://ip-api.com/json/{$ip}");
+            $response = Http::timeout(3)->get("http://ip-api.com/json/$ip");
             if ($response->successful() && $response->json('status') === 'success') {
                 $city = $response->json('city');
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // Ignore error, keep 'Unknown'
         }
 
